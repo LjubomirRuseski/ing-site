@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title class="mk">Архитектура — Ингинститут</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    [data-lang="en"] .mk, [data-lang="mk"] .en { display: none !important; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    :root {
+      --cream:    #f0ede6;
+      --cream-dk: #e8e3d8;
+      --black:    #111110;
+      --charcoal: #1c1c1b;
+      --navy:     #0d1f3c;
+      --navy-lt:  #162d54;
+      --warm:     #8c7b6b;
+      --muted:    #6a6560;
+      --white:    #ffffff;
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'Inter', system-ui, sans-serif;
+    }
+    body { font-family: var(--sans); background: var(--cream); color: var(--black); line-height: 1.65; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: var(--black); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; }
+    .nav-logo { font-family: var(--sans); font-weight: 600; font-size: 1.1rem; color: var(--white); text-decoration: none; letter-spacing: 0.04em; }
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-links a { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.75); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { border: 1px solid rgba(255,255,255,0.55) !important; padding: 8px 20px; color: var(--white) !important; }
+    .nav-cta:hover { background: var(--white) !important; color: var(--black) !important; }
+    .lang-btn { background: none; border: 1px solid rgba(255,255,255,0.4); color: rgba(255,255,255,0.7); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; padding: 5px 12px; cursor: pointer; font-family: var(--sans); transition: all 0.2s; }
+    .lang-btn:hover { border-color: var(--white); color: var(--white); }
+
+    /* Dropdown */
+    .nav-dropdown { position: relative; }
+    .nav-dd-btn { background: none; border: none; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.75); cursor: pointer; font-family: var(--sans); padding: 0; transition: color 0.2s; white-space: nowrap; }
+    .nav-dd-btn:hover { color: var(--white); }
+    .nav-dd-menu { position: absolute; top: calc(100% + 20px); left: 50%; transform: translateX(-50%); background: var(--black); min-width: 290px; padding: 6px 0; display: none; flex-direction: column; border: 1px solid rgba(255,255,255,0.1); z-index: 300; box-shadow: 0 24px 48px rgba(0,0,0,0.5); }
+    .nav-dd-menu.open { display: flex; }
+    .nav-dd-menu a { display: block; padding: 9px 20px; font-size: 0.67rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.15s, background 0.15s; }
+    .nav-dd-menu a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+
+    /* ── HERO ── */
+    .disc-hero { background: var(--navy); min-height: 72vh; padding: 130px 10% 80px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; }
+    .disc-hero-bg { position: absolute; right: -20px; top: 50%; transform: translateY(-50%); font-family: var(--serif); font-size: clamp(9rem, 18vw, 20rem); font-weight: 700; color: rgba(255,255,255,0.028); line-height: 1; pointer-events: none; user-select: none; white-space: nowrap; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); text-decoration: none; margin-bottom: 56px; transition: color 0.2s; }
+    .back-link:hover { color: rgba(255,255,255,0.7); }
+    .disc-eyebrow { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.38); margin-bottom: 20px; }
+    .disc-hero h1 { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 400; color: var(--white); line-height: 1.15; max-width: 740px; margin-bottom: 24px; }
+    .disc-tagline { font-size: 1rem; color: rgba(255,255,255,0.52); max-width: 540px; line-height: 1.75; }
+
+    /* ── ABOUT ── */
+    #disc-about { background: var(--cream); padding: 100px 10%; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; max-width: 1100px; align-items: start; }
+    .about-label { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--warm); margin-bottom: 20px; }
+    .about-heading { font-family: var(--serif); font-size: clamp(1.5rem, 2.5vw, 2.1rem); font-weight: 400; color: var(--charcoal); line-height: 1.3; }
+    .about-text { font-size: 0.97rem; color: var(--charcoal); line-height: 1.85; }
+    .about-text p + p { margin-top: 18px; }
+    @media (max-width: 780px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+    /* ── SERVICES ── */
+    #disc-services { background: var(--charcoal); padding: 100px 10%; }
+    .section-eyebrow { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 14px; }
+    .section-title-light { font-family: var(--serif); font-size: clamp(1.6rem, 2.8vw, 2.4rem); font-weight: 400; color: var(--white); line-height: 1.25; margin-bottom: 60px; }
+    .svc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px; }
+    .svc-card { background: #252523; padding: 40px 36px; }
+    .svc-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; color: var(--white); margin-bottom: 14px; line-height: 1.3; }
+    .svc-desc { font-size: 0.88rem; color: rgba(255,255,255,0.48); line-height: 1.8; }
+
+    /* ── EXPERTS ── */
+    #disc-experts { background: var(--navy); padding: 100px 10%; }
+    .experts-eyebrow { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 14px; }
+    .experts-heading { font-family: var(--serif); font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 400; color: var(--white); margin-bottom: 52px; line-height: 1.3; }
+    .experts-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2px; margin-bottom: 48px; }
+    .expert-card { background: #16263d; aspect-ratio: 3/4; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px 20px; text-decoration: none; transition: opacity 0.2s; }
+    .expert-card:hover { opacity: 0.85; }
+    .expert-card-bg { position: absolute; inset: 0; background: linear-gradient(160deg, #1e3050 0%, #0e1e38 100%); }
+    .expert-card-content { position: relative; z-index: 2; }
+    .expert-discipline { font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 7px; }
+    .expert-name { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; color: var(--white); text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.2; }
+    .expert-role { font-family: var(--serif); font-size: 0.82rem; font-style: italic; color: rgba(255,255,255,0.42); margin-top: 4px; }
+    .expert-link { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 10px; display: block; transition: color 0.2s; }
+    .expert-card:hover .expert-link { color: rgba(255,255,255,0.65); }
+    .experts-cta a { display: inline-flex; align-items: center; gap: 10px; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); border: 1px solid rgba(255,255,255,0.4); padding: 14px 26px; text-decoration: none; transition: all 0.2s; }
+    .experts-cta a:hover { background: var(--white); color: var(--navy); }
+
+    /* ── CTA STRIP ── */
+    #disc-cta { background: var(--cream-dk); padding: 80px 10%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 32px; }
+    .cta-text { font-family: var(--serif); font-size: clamp(1.2rem, 2.2vw, 1.7rem); font-style: italic; color: var(--charcoal); max-width: 560px; line-height: 1.45; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 10px; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); background: var(--navy); padding: 16px 30px; text-decoration: none; transition: background 0.2s; white-space: nowrap; flex-shrink: 0; }
+    .cta-btn:hover { background: var(--navy-lt); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--black); padding: 40px 10%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { font-family: var(--sans); font-size: 1rem; font-weight: 600; color: var(--white); text-decoration: none; letter-spacing: 0.04em; }
+    footer p { font-size: 0.75rem; color: rgba(255,255,255,0.28); }
+    footer a.footer-email { font-size: 0.75rem; color: rgba(255,255,255,0.35); text-decoration: none; }
+    footer a.footer-email:hover { color: rgba(255,255,255,0.7); }
+
+    /* Scroll fade-in */
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade.visible { opacity: 1; transform: none; }
+
+    /* ── Projects row ── */
+    #disc-projects { background: var(--charcoal); padding: 90px clamp(24px, 6vw, 100px); }
+    .proj-eyebrow { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 14px; }
+    .proj-heading  { font-family: var(--serif); font-size: clamp(1.4rem, 2.4vw, 2rem); font-weight: 400; color: var(--white); margin-bottom: 48px; line-height: 1.3; }
+    .proj-card { background: #222220; padding: 44px 40px; max-width: 680px; text-decoration: none; display: block; transition: background 0.2s; border-left: 3px solid rgba(255,255,255,0.08); }
+    .proj-card:hover { background: #2c2c2a; }
+    .proj-card-meta { font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 18px; display: flex; gap: 20px; flex-wrap: wrap; }
+    .proj-card h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--white); font-weight: 400; line-height: 1.4; margin-bottom: 14px; }
+    .proj-card p  { font-size: 0.88rem; color: rgba(255,255,255,0.42); line-height: 1.75; margin-bottom: 24px; }
+    .proj-card-link { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+    .proj-card:hover .proj-card-link { color: rgba(255,255,255,0.7); }
+  </style>
+</head>
+<body data-lang="mk">
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><span class="mk">ИНГИНСТИТУТ</span><span class="en">INGINSTITUT</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#quote" class="mk">За нас</a><a href="index.html#quote" class="en">About</a></li>
+    <li><a href="index.html#experts" class="mk">Нашите луѓе</a><a href="index.html#experts" class="en">Our People</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dd-btn mk" onclick="toggleDD('svcDD',event)">Услуги ▾</button>
+      <button class="nav-dd-btn en" onclick="toggleDD('svcDD',event)">Services ▾</button>
+      <div class="nav-dd-menu" id="svcDD">
+        <a href="svc-forensic.html" class="mk">Судско вештачење</a>
+        <a href="svc-forensic.html" class="en">Forensic Expertise</a>
+        <a href="svc-review.html" class="mk">Супервештачење</a>
+        <a href="svc-review.html" class="en">Expert Review</a>
+        <a href="svc-consulting.html" class="mk">Консултантски услуги</a>
+        <a href="svc-consulting.html" class="en">Business Consulting</a>
+        <a href="svc-assessments.html" class="mk">Стручни проценки</a>
+        <a href="svc-assessments.html" class="en">Expert Assessments</a>
+        <a href="svc-inspections.html" class="mk">Технички инспекции</a>
+        <a href="svc-inspections.html" class="en">Technical Inspections</a>
+        <a href="svc-financial.html" class="mk">Финансиска анализа</a>
+        <a href="svc-financial.html" class="en">Financial Analysis</a>
+      </div>
+    </li>
+    <li class="nav-dropdown">
+      <button class="nav-dd-btn mk" onclick="toggleDD('discDD',event)">Дисциплини ▾</button>
+      <button class="nav-dd-btn en" onclick="toggleDD('discDD',event)">Disciplines ▾</button>
+      <div class="nav-dd-menu" id="discDD">
+        <a href="disc-architecture.html" class="mk">Архитектура</a>
+        <a href="disc-architecture.html" class="en">Architecture</a>
+        <a href="disc-geodesy.html" class="mk">Геодезија</a>
+        <a href="disc-geodesy.html" class="en">Geodesy</a>
+        <a href="disc-civil.html" class="mk">Градежништво / Хидротехника</a>
+        <a href="disc-civil.html" class="en">Civil Eng. / Hydrotechnics</a>
+        <a href="disc-economics.html" class="mk">Економија</a>
+        <a href="disc-economics.html" class="en">Economics</a>
+        <a href="disc-electrical.html" class="mk">Електротехника</a>
+        <a href="disc-electrical.html" class="en">Electrical Engineering</a>
+        <a href="disc-agriculture.html" class="mk">Земјоделство</a>
+        <a href="disc-agriculture.html" class="en">Agriculture</a>
+        <a href="disc-mechanical.html" class="mk">Машинство</a>
+        <a href="disc-mechanical.html" class="en">Mechanical Engineering</a>
+        <a href="disc-medicine.html" class="mk">Медицина</a>
+        <a href="disc-medicine.html" class="en">Medicine</a>
+        <a href="disc-animal.html" class="mk">Сточарство</a>
+        <a href="disc-animal.html" class="en">Animal Husbandry</a>
+        <a href="disc-accounting.html" class="mk">Финансиско и материјално сметководство</a>
+        <a href="disc-accounting.html" class="en">Financial &amp; Material Accounting</a>
+        <a href="disc-forestry.html" class="mk">Шумарство</a>
+        <a href="disc-forestry.html" class="en">Forestry</a>
+      </div>
+    </li>
+    <li><a href="case-study.html" class="mk">Проекти</a><a href="case-study.html" class="en">Projects</a></li>
+    <li><a href="index.html#contact" class="nav-cta mk">Побарај вештак →</a><a href="index.html#contact" class="nav-cta en">Find an Expert →</a></li>
+    <li><button class="lang-btn" onclick="toggleLang()" id="lang-toggle">EN</button></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="disc-hero">
+  <div class="disc-hero-bg">Архите</div>
+  <a href="index.html#disciplines" class="back-link mk">← Сите дисциплини</a>
+  <a href="index.html#disciplines" class="back-link en">← All disciplines</a>
+  <div class="disc-eyebrow mk">Стручна дисциплина</div>
+  <div class="disc-eyebrow en">Expert discipline</div>
+  <h1 class="mk">Архитектура</h1>
+  <h1 class="en">Architecture</h1>
+  <p class="disc-tagline mk">Проценка на градежна документација и архитектонски дефекти</p>
+  <p class="disc-tagline en">Assessment of building documentation and architectural defects</p>
+</section>
+
+<!-- ABOUT -->
+<section id="disc-about" class="fade">
+  <div class="about-grid">
+    <div>
+      <div class="about-label mk">За дисциплината</div>
+      <div class="about-label en">About the discipline</div>
+      <h2 class="about-heading mk">Зошто е важно вештачењето<br>во Архитектура?</h2>
+      <h2 class="about-heading en">Why does expert testimony<br>matter in Architecture?</h2>
+    </div>
+    <div class="about-text mk"><p>Архитектонското вештачење ги опфаќа споровите поврзани со проектна документација, градежни дозволи и усогласеност со прописите за изградба. Вештаците го анализираат квалитетот на изведбата, отстапувањата од проектот и последиците врз вредноста на имотот.</p><p>Постапката вклучува теренски преглед, детална анализа на документација и подготовка на наод со сликовна документација прифатлива за суд. Нашите архитектонски вештаци имаат искуство во судски постапки пред основни и апелациони судови низ цела Северна Македонија.</p></div>
+    <div class="about-text en"><p>Architectural expertise covers disputes related to design documentation, building permits and compliance with construction regulations. Experts analyse execution quality, deviations from approved plans and the impact on property value.</p><p>The process includes site inspection, detailed documentation review, and preparation of a court-accepted finding with photographic evidence. Our architectural expert witnesses have extensive experience before first-instance and appellate courts throughout North Macedonia.</p></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="disc-services" class="fade">
+  <div class="section-eyebrow mk">Нашите услуги · Архитектура</div>
+  <div class="section-eyebrow en">Our services · Architecture</div>
+  <h2 class="section-title-light mk">Што нудиме во оваа дисциплина</h2>
+  <h2 class="section-title-light en">What we offer in this discipline</h2>
+  <div class="svc-grid">
+
+    <div class="svc-card">
+      <h3 class="svc-title mk">Оценка на проектна документација</h3>
+      <h3 class="svc-title en">Assessment of design documentation</h3>
+      <p class="svc-desc mk">Анализа на архитектонски проекти за усогласеност со прописи, стандарди и договорни обврски, со идентификација на отстапувања и пропусти.</p>
+      <p class="svc-desc en">Analysis of architectural projects for compliance with regulations, standards and contractual obligations, identifying deviations and omissions.</p>
+    </div>
+    <div class="svc-card">
+      <h3 class="svc-title mk">Проценка на градежни дефекти</h3>
+      <h3 class="svc-title en">Assessment of building defects</h3>
+      <p class="svc-desc mk">Теренска проверка и документирање на видливи и скриени дефекти, неизведени работи и отстапувања, со детален опис на секое наодено оштетување.</p>
+      <p class="svc-desc en">Site inspection and documentation of visible and hidden defects, unexecuted works and deviations, with a detailed description of each identified deficiency.</p>
+    </div>
+    <div class="svc-card">
+      <h3 class="svc-title mk">Проценка на трошоци за санација</h3>
+      <h3 class="svc-title en">Estimation of remediation costs</h3>
+      <p class="svc-desc mk">Пресметка на реални трошоци за отстранување на дефекти и враќање на имотот во проектна состојба, врз основа на тековни пазарни цени на труд и материјали.</p>
+      <p class="svc-desc en">Calculation of actual costs to rectify defects and restore the property to its designed state, based on current market prices for labour and materials.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTS -->
+<section id="disc-experts" class="fade">
+  <div class="experts-eyebrow mk">Нашите луѓе · Архитектура</div>
+  <div class="experts-eyebrow en">Our people · Architecture</div>
+  <h2 class="experts-heading mk">Акредитирани вешти лица<br>во Архитектура</h2>
+  <h2 class="experts-heading en">Accredited expert witnesses<br>in Architecture</h2>
+  <div class="experts-row">
+    <!-- Replace these placeholder cards with real expert links when profiles are ready -->
+    <a href="expert-profile.html" class="expert-card">
+      <div class="expert-card-bg"></div>
+      <div class="expert-card-content">
+        <div class="expert-discipline mk">Архитектура</div>
+        <div class="expert-discipline en">Architecture</div>
+        <div class="expert-name mk">ВЕШТО ЛИЦЕ</div>
+        <div class="expert-name en">EXPERT WITNESS</div>
+        <div class="expert-role mk">Судски вештак</div>
+        <div class="expert-role en">Expert Witness</div>
+        <span class="expert-link mk">Погледни профил →</span>
+        <span class="expert-link en">View profile →</span>
+      </div>
+    </a>
+    <a href="expert-profile.html" class="expert-card">
+      <div class="expert-card-bg"></div>
+      <div class="expert-card-content">
+        <div class="expert-discipline mk">Архитектура</div>
+        <div class="expert-discipline en">Architecture</div>
+        <div class="expert-name mk">ВЕШТО ЛИЦЕ</div>
+        <div class="expert-name en">EXPERT WITNESS</div>
+        <div class="expert-role mk">Судски вештак</div>
+        <div class="expert-role en">Expert Witness</div>
+        <span class="expert-link mk">Погледни профил →</span>
+        <span class="expert-link en">View profile →</span>
+      </div>
+    </a>
+    <a href="expert-profile.html" class="expert-card">
+      <div class="expert-card-bg"></div>
+      <div class="expert-card-content">
+        <div class="expert-discipline mk">Архитектура</div>
+        <div class="expert-discipline en">Architecture</div>
+        <div class="expert-name mk">ВЕШТО ЛИЦЕ</div>
+        <div class="expert-name en">EXPERT WITNESS</div>
+        <div class="expert-role mk">Судски вештак</div>
+        <div class="expert-role en">Expert Witness</div>
+        <span class="expert-link mk">Погледни профил →</span>
+        <span class="expert-link en">View profile →</span>
+      </div>
+    </a>
+  </div>
+  <div class="experts-cta">
+    <a href="index.html#contact" class="mk">Побарај вештак во оваа дисциплина →</a>
+    <a href="index.html#contact" class="en">Request an expert in this discipline →</a>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="disc-projects" class="fade">
+  <div class="proj-eyebrow mk">Наши проекти · Архитектура</div>
+  <div class="proj-eyebrow en">Our projects · Architecture</div>
+  <h2 class="proj-heading mk">Примери од нашата работа</h2>
+  <h2 class="proj-heading en">Examples from our work</h2>
+  <!-- Replace with real case study links when ready -->
+  <a href="case-study.html" class="proj-card">
+    <div class="proj-card-meta">
+      <span class="mk">Архитектура</span><span class="en">Architecture</span>
+      <span><!-- Година / Year --></span>
+    </div>
+    <h3 class="mk"><!-- Наслов на проектот --></h3>
+    <h3 class="en"><!-- Project title --></h3>
+    <p class="mk"><!-- Краток опис на случајот (1–2 реченици) --></p>
+    <p class="en"><!-- Brief case summary (1–2 sentences) --></p>
+    <span class="proj-card-link mk">Погледни проект →</span>
+    <span class="proj-card-link en">View project →</span>
+  </a>
+</section>
+
+<!-- CTA STRIP -->
+<div id="disc-cta" class="fade">
+  <p class="cta-text mk">Имате случај кој бара стручно вештачење во областа на Архитектура?</p>
+  <p class="cta-text en">Have a case requiring expert testimony in Architecture?</p>
+  <a href="index.html#contact" class="cta-btn mk">Контактирај нè →</a>
+  <a href="index.html#contact" class="cta-btn en">Get in touch →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="footer-logo"><span class="mk">ИНГИНСТИТУТ</span><span class="en">INGINSTITUT</span></a>
+  <p class="mk">© 2026 Ингинститут. Сите права се задржани.</p>
+  <p class="en">© 2026 Inginstitut. All rights reserved.</p>
+  <a href="mailto:contact@inginstitut.com" class="footer-email">contact@inginstitut.com</a>
+</footer>
+
+<script>
+  function toggleLang() {
+    const body = document.body;
+    const btn  = document.getElementById('lang-toggle');
+    body.dataset.lang = body.dataset.lang === 'mk' ? 'en' : 'mk';
+    btn.textContent   = body.dataset.lang === 'mk' ? 'EN' : 'МК';
+    document.documentElement.lang = body.dataset.lang;
+  }
+
+  function toggleDD(id, e) {
+    e.stopPropagation();
+    ['discDD','svcDD'].forEach(function(did) {
+      var el = document.getElementById(did);
+      if (el) { if (did === id) el.classList.toggle('open'); else el.classList.remove('open'); }
+    });
+  }
+  document.addEventListener('click', function() {
+    ['discDD','svcDD'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.remove('open');
+    });
+  });
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
